@@ -1,0 +1,26 @@
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px;
+  padding-top: calc(10px + var(--safe-top));
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #1c1c1e;
+}
+
+.tab {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tab-inactive);
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.tab--active {
+  background: var(--surface2);
+  color: var(--tab-active);
+}

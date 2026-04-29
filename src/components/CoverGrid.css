@@ -1,0 +1,32 @@
+.cover-grid-wrap {
+  padding-bottom: calc(24px + var(--safe-bottom));
+}
+
+.cover-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+  padding: var(--gap);
+}
+
+.load-more {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 28px;
+  border-radius: 20px;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.load-more:disabled {
+  opacity: 0.5;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 60px 0;
+  font-size: 15px;
+}
