@@ -1,22 +1,27 @@
 // src/App.jsx
-import { useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import TabBar from './components/TabBar'
 import CoverGrid from './components/CoverGrid'
 import AddSheet from './components/AddSheet'
 import Toast from './components/Toast'
 import './App.css'
 
+const TAB_LABELS = { film: 'Films', show: 'Shows', book: 'Books' }
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('film')
   const [showAdd, setShowAdd] = useState(false)
   const [newItem, setNewItem] = useState(null)
   const [toast, setToast] = useState(null)
+  const toastTimer = useRef(null)
+  const handleNewItemConsumed = useCallback(() => setNewItem(null), [])
 
   function handleSuccess(item) {
+    clearTimeout(toastTimer.current)
     setShowAdd(false)
     setNewItem(item)
     setToast(`Added ${item.title}`)
-    setTimeout(() => setToast(null), 2500)
+    toastTimer.current = setTimeout(() => setToast(null), 2500)
   }
 
   return (
@@ -34,7 +39,7 @@ export default function App() {
       <CoverGrid
         type={activeTab}
         newItem={newItem}
-        onNewItemConsumed={() => setNewItem(null)}
+        onNewItemConsumed={handleNewItemConsumed}
       />
       <TabBar active={activeTab} onChange={setActiveTab} />
       {showAdd && (
@@ -44,5 +49,3 @@ export default function App() {
     </div>
   )
 }
-
-const TAB_LABELS = { film: 'Films', show: 'Shows', book: 'Books' }
