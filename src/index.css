@@ -24,4 +24,13 @@ body {
 
 button {
   font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
