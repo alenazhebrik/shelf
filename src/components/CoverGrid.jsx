@@ -1,5 +1,5 @@
 // src/components/CoverGrid.jsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import CoverCard from './CoverCard'
 import { fetchItems } from '../lib/supabase'
 import './CoverGrid.css'
@@ -13,23 +13,7 @@ export default function CoverGrid({ type, newItem, onNewItemConsumed }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    setItems([])
-    setPage(0)
-    setHasMore(true)
-    setError(null)
-    load(0)
-  }, [type])
-
-  useEffect(() => {
-    if (!newItem) return
-    if (newItem.type === type) {
-      setItems(prev => [newItem, ...prev])
-    }
-    onNewItemConsumed()
-  }, [newItem])
-
-  async function load(pageNum) {
+  const load = useCallback(async (pageNum) => {
     setLoading(true)
     try {
       const data = await fetchItems({ type, page: pageNum, pageSize: PAGE_SIZE })
@@ -40,9 +24,26 @@ export default function CoverGrid({ type, newItem, onNewItemConsumed }) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [type])
+
+  useEffect(() => {
+    setItems([])
+    setPage(0)
+    setHasMore(true)
+    setError(null)
+    load(0)
+  }, [type, load])
+
+  useEffect(() => {
+    if (!newItem) return
+    if (newItem.type === type) {
+      setItems(prev => [newItem, ...prev])
+    }
+    onNewItemConsumed()
+  }, [newItem, type, onNewItemConsumed])
 
   function loadMore() {
+    if (loading) return
     const next = page + 1
     setPage(next)
     load(next)

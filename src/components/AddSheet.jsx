@@ -35,6 +35,7 @@ export default function AddSheet({ onSuccess, onClose }) {
         throw new Error(body.error || (res.status === 404 ? "Couldn't find that title" : 'Something went wrong'))
       }
       const item = await res.json()
+      setLoading(false)
       onSuccess(item)
     } catch (err) {
       setError(err.message)
@@ -45,12 +46,13 @@ export default function AddSheet({ onSuccess, onClose }) {
   return (
     <>
       <div className="sheet-backdrop" data-testid="sheet-backdrop" onClick={onClose} />
-      <div className="add-sheet" role="dialog" aria-label="Add to shelf">
+      <div className="add-sheet" role="dialog" aria-modal="true" aria-label="Add to shelf">
         <div className="sheet-handle" />
         <h2 className="sheet-title">Add to shelf</h2>
         <form onSubmit={handleSubmit}>
           <input
             ref={inputRef}
+            aria-label="Title"
             className="sheet-input"
             placeholder="Title..."
             value={title}
