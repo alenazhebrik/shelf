@@ -1,0 +1,46 @@
+/* src/components/CoverGrid.css */
+.grid-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 10px 16px;
+}
+
+.cover-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.grid-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 60vh;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.cover-skeleton {
+  aspect-ratio: 2 / 3;
+  border-radius: 5px;
+  background: var(--surface);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+.load-more {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: var(--surface);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
