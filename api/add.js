@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
   const auth = req.headers.authorization
-  if (!auth || auth !== `Bearer ${process.env.SHELF_API_KEY}`) {
+  if (!auth || !process.env.SHELF_API_KEY || auth !== `Bearer ${process.env.SHELF_API_KEY}`) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
     metadata = await findMetadata(title, type)
   } catch (err) {
     console.error('Metadata fetch error:', err)
+    return res.status(502).json({ error: 'Failed to reach metadata service — try again' })
   }
 
   if (!metadata) {
